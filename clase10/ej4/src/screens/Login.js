@@ -1,50 +1,87 @@
-import React from "react";
-import { View, Text, Pressable } from "react-native-web";
+import React, { Component } from "react";
+import { View, Text, Pressable, TextInput } from "react-native-web";
 import { StyleSheet } from "react-native";
 
-function Login(props){
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Formulario de Login</Text> 
-            <Pressable onPress={ () => props.navigation.navigate("Register")}>
-                <Text style={styles.buttonBlue}>Ir a Resgiter</Text>
-            </Pressable>
-            <Pressable onPress={ () => props.navigation.navigate("HomeMenu")}>
-                <Text style={styles.buttonOrange}>Entrar en la app</Text>
-            </Pressable>
-        </View>
+
+class Login extends Component{
+    constructor(props) {
+        super(props)
+        this.state={
+            email:"",
+            user: "",
+            password:"",
+
+        }
+    }
+    onSubmit() {
+        console.log("Email:", this.state.email);
+        console.log("Password:", this.state.password);
+      }
+
+    render(){
+        return (
+            <View style={styles.container}>
+                <Text style={styles.title}>Formulario de Login</Text> 
+                <TextInput style={styles.input}
+                    keyboardType="email-address"
+                    placeholder="email"
+                    onChangeText={ text => this.setState({email:text})}
+                    value={this.state.email}/>
+                <TextInput style={styles.input}
+                    keyboardType="default"
+                    placeholder="password"
+                    secureTextEntry={true}
+                    onChangeText={ text => this.setState({password:text})}
+                    value={this.state.password}/>
+                <Pressable style={styles.button} onPress={() => this.onSubmit()}>
+                    <Text style={styles.buttonText}>Login</Text>
+                </Pressable>
+                <Pressable style={styles.button} onPress={ () => this.props.navigation.navigate("Register")}>
+                    <Text style={styles.buttonText}>Ir a Resgiter</Text>
+                </Pressable>
+                <Pressable style={styles.button} onPress={ () => this.props.navigation.navigate("HomeMenu")}>
+                    <Text style={styles.buttonText}>Entrar en la app</Text>
+                </Pressable>
+            </View>
     )
 }
+}
+    
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: "#f6f6f6",
-      alignItems: "center",
-      justifyContent: "center",
-      paddingHorizontal: 20,
+      paddingHorizontal: 10,
+      marginTop: 20,
     },
     title: {
       fontSize: 28,
       fontWeight: "bold",
-      marginBottom: 20,
+      marginBottom: 15,
       color: "#000",
+      textAlign: "center",
     },
-    buttonBlue: {
-      backgroundColor: "#64B5F6", 
-      padding: 20,
-      borderRadius: 6,
-      marginBottom: 25,
-      textAlign: 'center',
-      fontWeight: 'bold'
-    },
-    buttonOrange: {
-      backgroundColor: "#FFB74D", 
-      padding: 15,
-      borderRadius: 6,
-      marginBottom: 25,
-      textAlign: 'center',
-      fontWeight: 'bold'
-    },
-  });
+    button: {
+        backgroundColor: '#28a745',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        alignItems: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#28a745',
+        marginTop: 5
+      },
+    input: {
+        height: 20,
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderStyle: 'solid',
+        marginVertical: 10,
+      },
+    buttonText: {
+        color:'#fff'
+    }
+});
 
 export default Login;
